@@ -72,7 +72,7 @@ export function BlogLayout({ children }: LayoutProps) {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-8">
               <Link href="/" className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                MyHome Blog
+                MyX Ideal Blog
               </Link>
               
               {/* Desktop Navigation */}
