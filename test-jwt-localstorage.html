@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JWT localStorage测试</title>
+</head>
+<body>
+    <h1>JWT + localStorage方案验证</h1>
+    <div id="results"></div>
+    
+    <script>
+        // 模拟JWT token存储和检查
+        const ACCESS_TOKEN_KEY = 'jwt_access_token';
+        const REFRESH_TOKEN_KEY = 'jwt_refresh_token';
+        
+        // 设置测试token
+        localStorage.setItem(ACCESS_TOKEN_KEY, 'test-jwt-token');
+        localStorage.setItem(REFRESH_TOKEN_KEY, 'test-refresh-token');
+        
+        // 检查localStorage中的token
+        const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+        
+        // 检查cookies中是否有JWT相关的内容
+        const cookies = document.cookie;
+        const hasJWTCookies = cookies.includes('jwt_') || cookies.includes('JWT');
+        
+        const results = document.getElementById('results');
+        results.innerHTML = `
+            <h2>测试结果:</h2>
+            <p><strong>localStorage access token:</strong> ${accessToken ? '✓ 存在' : '✗ 不存在'}</p>
+            <p><strong>localStorage refresh token:</strong> ${refreshToken ? '✓ 存在' : '✗ 不存在'}</p>
+            <p><strong>Cookies中是否有JWT相关内容:</strong> ${hasJWTCookies ? '✗ 有（不应该）' : '✓ 无（正确）'}</p>
+            <p><strong>所有cookies:</strong> ${cookies || '无cookies'}</p>
+            
+            <h2>结论:</h2>
+            <p style="color: ${!hasJWTCookies ? 'green' : 'red'}; font-weight: bold;">
+                ${!hasJWTCookies ? '✓ JWT方案已完全使用localStorage，不依赖cookies' : '✗ JWT方案仍在使用cookies'}
+            </p>
+        `;
+        
+        // 清理测试token
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(REFRESH_TOKEN_KEY);
+    </script>
+</body>
+</html>

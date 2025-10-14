@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const PROTECTED_PATHS = ['/dashboard', '/settings', '/profile']
+const JWT_PROTECTED_PATHS = ['/testserver2'] // JWT方案保护的路径
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -12,12 +13,19 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/_next') || // Next.js内部文件
     pathname === '/login' ||
     pathname === '/' ||
-    pathname === '/favicon.ico'
+    pathname === '/favicon.ico' ||
+    pathname.startsWith('/testclient') || // 测试页面放行
+    pathname.startsWith('/testfetch') // 测试页面放行
   ) {
     return NextResponse.next()
   }
 
-  // 检查是否需要保护
+  // JWT方案的路径保护
+  if (JWT_PROTECTED_PATHS.some((path) => pathname.startsWith(path))) {
+    return handleJWTAuth(req, pathname)
+  }
+
+  // 原有的cookie方案保护
   const needsAuth = PROTECTED_PATHS.some((path) => pathname.startsWith(path))
   if (!needsAuth) {
     return NextResponse.next()
@@ -33,26 +41,21 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // 可选：校验token格式（简单检测或解码JWT）
-  /*try {
-    const [, payloadBase64] = token.split('.')
-    const payload = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf-8'))
-    const exp = payload.exp * 1000
-    if (Date.now() > exp) {
-      // Token过期，重定向到登录页
-      const loginUrl = new URL('/login', req.url)
-      loginUrl.searchParams.set('redirect', pathname)
-      return NextResponse.redirect(loginUrl)
-    }
-  } catch {
-    // Token解析失败，重定向
-    const loginUrl = new URL('/login', req.url)
-    loginUrl.searchParams.set('redirect', pathname)
-    return NextResponse.redirect(loginUrl)
-  }*/
-
   // ✅ 放行
   return NextResponse.next()
+}
+
+// 处理JWT认证的函数
+function handleJWTAuth(req: NextRequest, pathname: string) {
+  // JWT + localStorage方案：middleware无法验证localStorage中的token
+  // 直接放行请求，让客户端组件自己处理认证检查
+  // 添加header标记，让页面组件知道这是需要JWT认证的路径
+  
+  const response = NextResponse.next()
+  response.headers.set('x-jwt-auth-required', 'true')
+  response.headers.set('x-requested-path', pathname)
+  
+  return response
 }
 
 // 指定中间件生效的路径范围

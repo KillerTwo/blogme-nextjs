@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -17,6 +19,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: `${BASE_URL}/:path*`, // 代理到后端服务器
+            },
+            {
+                source: '/uploads/:path*',
+                destination: `${BASE_URL}/uploads/:path*`,
+            },
+        ]
+    },
 };
 
 export default nextConfig;

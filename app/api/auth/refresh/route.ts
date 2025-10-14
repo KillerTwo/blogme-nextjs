@@ -6,7 +6,7 @@ const API_BASE = process.env.BACKEND_API_URL; // e.g. http://spring:8080
 const REFRESH_PATH = '/api/auth/refresh';
 
 export async function POST() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const refreshToken = cookieStore.get('refresh_token')?.value;
 
   if (!refreshToken) {
