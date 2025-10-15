@@ -36,6 +36,21 @@ export function CreatePostDialog({ children }: CreatePostDialogProps) {
   });
   const [coverImagePreview, setCoverImagePreview] = useState<string | null>(null);
 
+  // 重置表单数据
+  const resetFormData = () => {
+    setFormData({
+      category: '',
+      title: '',
+      content: '',
+      summary: '',
+      tags: '',
+      coverImage: '',
+      seoDescription: '',
+      showTopPreview: false,
+    });
+    setCoverImagePreview(null);
+  };
+
   // 处理弹框打开/关闭时的布局跳动
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -52,6 +67,8 @@ export function CreatePostDialog({ children }: CreatePostDialogProps) {
           body.style.overflow = 'scroll';
         });
       } else {
+        // 关闭时清空表单数据
+        resetFormData();
         // 延迟清理，确保动画完成
         setTimeout(() => {
           body.style.removeProperty('padding-right');
@@ -66,18 +83,7 @@ export function CreatePostDialog({ children }: CreatePostDialogProps) {
     console.log('发布博客:', formData);
     // 这里应该调用 API 发布博客
     handleOpenChange(false);
-    // 重置表单
-    setFormData({
-      category: '',
-      title: '',
-      content: '',
-      summary: '',
-      tags: '',
-      coverImage: '',
-      seoDescription: '',
-      showTopPreview: false,
-    });
-    setCoverImagePreview(null);
+    // 表单会在 handleOpenChange 中自动重置
   };
 
   const parseTags = () => {
@@ -226,7 +232,6 @@ export function CreatePostDialog({ children }: CreatePostDialogProps) {
                       onChange={(val) => setFormData({...formData, content: val || ''})}
                       preview="edit"
                       hideToolbar={false}
-                      visibleDragBar={false}
                       textareaProps={{
                         placeholder: '请输入文章内容，支持 Markdown 语法...',
                         required: true,

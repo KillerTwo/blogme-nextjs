@@ -2,7 +2,7 @@ import type { Post, Category, Tag, Author, FriendLink, Guestbook, Comment } from
 
 export const author: Author = {
   id: 1,
-  name: 'ModStart博主',
+  name: '天下第一',
   avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ModStart',
   bio: '热爱技术，分享生活。专注于Web开发、React、Node.js等领域。',
   email: 'admin@example.com',

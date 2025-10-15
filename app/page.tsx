@@ -3,12 +3,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BlogLayout } from '@/components/layout/blog-layout';
 import { PostCard } from '@/components/blog/post-card';
-import { Sidebar } from '@/components/blog/sidebar';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { posts } from '@/lib/data';
+import ContentLayout from "@/components/layout/content-layout";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,18 +19,15 @@ export default function Home() {
   const totalPages = Math.ceil(posts.length / pageSize);
 
   const carouselPosts = posts.slice(0, 4);
-
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-2">
-        <div className="lg:col-span-5 space-y-8">
+      <ContentLayout>
           {/* 轮播图 */}
-          <Carousel className="w-full">
+          <Carousel className="w-full" autoplay={true} autoplayDelay={4000}>
             <CarouselContent>
               {carouselPosts.map((post) => (
                 <CarouselItem key={post.id}>
                   <Link href={`/posts/${post.id}`}>
-                    <div className="relative h-64 rounded-lg overflow-hidden group">
+                    <div className="relative h-80 rounded-lg overflow-hidden group">
                       <Image
                         src={post.coverImage || '/placeholder.jpg'}
                         alt={post.title}
@@ -58,9 +54,9 @@ export default function Home() {
 
           {/* 文章列表 */}
           <div>
-            <div className="mb-4">
+            {/*<div className="mb-4">
               <h2 className="text-xl font-semibold">最新文章</h2>
-            </div>
+            </div>*/}
             <div className="flex flex-col gap-2">
               {currentPosts.map((post) => (
                 <PostCard key={post.id} post={post} />
@@ -123,12 +119,6 @@ export default function Home() {
               </Pagination>
             </div>
           )}
-        </div>
-
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
+      </ContentLayout>
   );
 }

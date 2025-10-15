@@ -9,6 +9,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { Tag, ArrowLeft } from 'lucide-react';
 import { posts } from '@/lib/data';
 import type { Tag as TagType } from '@/lib/types';
+import ContentLayout from "@/components/layout/content-layout";
 
 interface TagClientProps {
   tag: TagType;
@@ -26,9 +27,8 @@ export function TagClient({ tag }: TagClientProps) {
   const totalPages = Math.ceil(tagPosts.length / pageSize);
 
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
-        <div className="lg:col-span-5 space-y-8">
+
+      <ContentLayout>
           <div className="bg-white rounded-lg shadow-sm p-8">
             <Link 
               href="/tags" 
@@ -107,12 +107,6 @@ export function TagClient({ tag }: TagClientProps) {
               <p className="text-gray-500">该标签下暂无文章</p>
             </div>
           )}
-        </div>
-
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
+      </ContentLayout>
   );
 }

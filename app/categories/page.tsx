@@ -1,16 +1,13 @@
 import Link from 'next/link';
-import { BlogLayout } from '@/components/layout/blog-layout';
-import { Sidebar } from '@/components/blog/sidebar';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { FolderOpen } from 'lucide-react';
 import { categories } from '@/lib/data';
+import ContentLayout from "@/components/layout/content-layout";
 
 export default function CategoriesPage() {
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-2">
-        <div className="lg:col-span-5">
+      <ContentLayout>
           <div className="bg-white rounded-lg shadow-sm p-8">
             <div className="flex items-center mb-8">
               <FolderOpen className="h-8 w-8 mr-3 text-blue-600" />
@@ -41,12 +38,6 @@ export default function CategoriesPage() {
               ))}
             </div>
           </div>
-        </div>
-
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
+      </ContentLayout>
   );
 }

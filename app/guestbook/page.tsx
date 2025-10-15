@@ -3,9 +3,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
-import { BlogLayout } from '@/components/layout/blog-layout';
-import { Sidebar } from '@/components/blog/sidebar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { MessageSquare, Reply, Send, ThumbsUp } from 'lucide-react';
 import { guestbooks as initialGuestbooks } from '@/lib/data';
 import type { Guestbook } from '@/lib/types';
+import ContentLayout from "@/components/layout/content-layout";
 
 interface GuestbookFormProps {
   parentId?: number;
@@ -241,9 +240,7 @@ export default function GuestbookPage() {
   };
 
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-2">
-        <div className="lg:col-span-5 space-y-8">
+      <ContentLayout>
           <div className="bg-white rounded-lg shadow-sm p-8">
             <div className="flex items-center mb-8">
               <MessageSquare className="h-8 w-8 mr-3 text-blue-600" />
@@ -293,12 +290,7 @@ export default function GuestbookPage() {
               )}
             </div>
           </div>
-        </div>
+      </ContentLayout>
 
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
   );
 }

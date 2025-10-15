@@ -9,6 +9,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { FolderOpen, ArrowLeft } from 'lucide-react';
 import { posts } from '@/lib/data';
 import type { Category } from '@/lib/types';
+import ContentLayout from "@/components/layout/content-layout";
 
 interface CategoryClientProps {
   category: Category;
@@ -26,9 +27,7 @@ export function CategoryClient({ category }: CategoryClientProps) {
   const totalPages = Math.ceil(categoryPosts.length / pageSize);
 
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
-        <div className="lg:col-span-5 space-y-8">
+      <ContentLayout>
           <div className="bg-white rounded-lg shadow-sm p-8">
             <Link 
               href="/categories" 
@@ -110,12 +109,6 @@ export function CategoryClient({ category }: CategoryClientProps) {
               <p className="text-gray-500">该分类下暂无文章</p>
             </div>
           )}
-        </div>
-
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
+      </ContentLayout>
   );
 }

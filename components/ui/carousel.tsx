@@ -19,6 +19,8 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
+  autoplay?: boolean
+  autoplayDelay?: number
 }
 
 type CarouselContextProps = {
@@ -47,6 +49,8 @@ function Carousel({
   opts,
   setApi,
   plugins,
+  autoplay = false,
+  autoplayDelay = 3000,
   className,
   children,
   ...props
@@ -87,6 +91,46 @@ function Carousel({
     },
     [scrollPrev, scrollNext]
   )
+
+  // 自动播放逻辑
+  React.useEffect(() => {
+    if (!autoplay || !api) return
+
+    const autoplayInterval = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext()
+      } else {
+        // 到达最后一张时，跳转到第一张
+        api.scrollTo(0)
+      }
+    }, autoplayDelay)
+
+    // 用户手动操作时暂停自动播放
+    const handleUserAction = () => {
+      clearInterval(autoplayInterval)
+      // 重新开始自动播放
+      setTimeout(() => {
+        if (!api) return
+        const newInterval = setInterval(() => {
+          if (api.canScrollNext()) {
+            api.scrollNext()
+          } else {
+            api.scrollTo(0)
+          }
+        }, autoplayDelay)
+        
+        // 清理函数会在组件卸载时清理这个新的interval
+        return () => clearInterval(newInterval)
+      }, autoplayDelay)
+    }
+
+    api.on('pointerDown', handleUserAction)
+
+    return () => {
+      clearInterval(autoplayInterval)
+      api.off('pointerDown', handleUserAction)
+    }
+  }, [api, autoplay, autoplayDelay])
 
   React.useEffect(() => {
     if (!api || !setApi) return
@@ -185,10 +229,10 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-8 rounded-full z-10 opacity-70 hover:opacity-100 transition-opacity",
         orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "top-1/2 left-4 -translate-y-1/2"
+          : "top-4 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
@@ -215,10 +259,10 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-8 rounded-full z-10 opacity-70 hover:opacity-100 transition-opacity",
         orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "top-1/2 right-4 -translate-y-1/2"
+          : "bottom-4 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollNext}

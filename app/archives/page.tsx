@@ -1,11 +1,10 @@
 import Link from 'next/link';
-import { BlogLayout } from '@/components/layout/blog-layout';
-import { Sidebar } from '@/components/blog/sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Archive, Calendar } from 'lucide-react';
 import { posts } from '@/lib/data';
 import type { Archive as ArchiveType } from '@/lib/types';
+import ContentLayout from "@/components/layout/content-layout";
 
 export default function ArchivesPage() {
   // 按年月归档文章
@@ -44,9 +43,7 @@ export default function ArchivesPage() {
   ];
 
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-2">
-        <div className="lg:col-span-5">
+      <ContentLayout>
           <div className="bg-white rounded-lg shadow-sm p-8">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center">
@@ -114,12 +111,6 @@ export default function ArchivesPage() {
               </div>
             )}
           </div>
-        </div>
-
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
+      </ContentLayout>
   );
 }

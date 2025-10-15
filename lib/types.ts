@@ -48,6 +48,7 @@ export interface Comment {
   content: string;
   createdAt: string;
   replies?: Comment[];
+  parentId?: number;
 }
 
 export interface FriendLink {

@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Eye, MessageCircle, Clock, ArrowLeft } from 'lucide-react';
 import type { Post, Comment } from '@/lib/types';
+import ContentLayout from "@/components/layout/content-layout";
 
 interface PostClientProps {
   post: Post;
@@ -34,12 +35,9 @@ export function PostClient({ post, comments }: PostClientProps) {
   };
 
   return (
-    <BlogLayout>
+      <ContentLayout>
       {/* 目录导航 */}
       <TableOfContents content={post.content} />
-      
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
-        <div className="lg:col-span-5">
           <article className="bg-white rounded-lg shadow-sm p-8">
             {/* 返回按钮 */}
             <Link 
@@ -209,12 +207,6 @@ export function PostClient({ post, comments }: PostClientProps) {
             {/* 评论系统 */}
             <CommentSystem postId={post.id} comments={comments} />
           </article>
-        </div>
-
-        <div className="lg:col-span-2">
-          <Sidebar />
-        </div>
-      </div>
-    </BlogLayout>
+      </ContentLayout>
   );
 }
