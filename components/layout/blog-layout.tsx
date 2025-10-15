@@ -70,20 +70,20 @@ export function BlogLayout({ children }: LayoutProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+            <div className="flex items-center h-full space-x-8">
+              <Link href="/" className="flex items-center h-full text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
                 MyX Ideal Blog
               </Link>
-              
+
               {/* Desktop Navigation */}
-              <NavigationMenu className="hidden md:flex">
-                <NavigationMenuList>
+              <NavigationMenu className="hidden md:flex h-full">
+                <NavigationMenuList className="h-full">
                   {navigationItems.map((item) => (
-                    <NavigationMenuItem key={item.href}>
+                    <NavigationMenuItem key={item.href} className="h-full flex items-center">
                       <NavigationMenuLink asChild>
-                        <Link 
+                        <Link
                           href={item.href}
-                          className={`group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                          className={`group inline-flex items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
                             pathname === item.href ? 'bg-accent text-accent-foreground' : ''
                           }`}
                         >

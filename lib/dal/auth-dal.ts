@@ -1,5 +1,5 @@
 // Data Access Layer for NextAuth v5 + DAL方案
-import { auth } from "@/lib/auth/nextauth-config"
+import { auth } from "@/auth"
 import { cache } from "react"
 import type { Session } from "next-auth"
 
@@ -82,34 +82,27 @@ export const getProtectedData = cache(async () => {
   }
 })
 
-// 模拟API调用（带认证）
+// 使用nextauth-server调用受保护的后端API
 export const callProtectedAPI = cache(async (endpoint: string) => {
   const user = await getAuthUser() // 确保已认证
-  
-  // 模拟调用后端API
-  try {
-    const response = await fetch(`${process.env.BACKEND_API_URL}${endpoint}`, {
-      headers: {
-        'Authorization': `Bearer mock-token-for-${user.name}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    
-    if (!response.ok) {
-      throw new Error(`API调用失败: ${response.status}`)
-    }
-    
-    return await response.json()
-  } catch (error) {
-    console.error('API调用错误:', error)
-    // 返回模拟数据
+
+  // 使用nextauth-server工具类调用后端API
+  const { nextauthServerApi } = await import('@/lib/api/nextauth-server')
+  const result = await nextauthServerApi.get(endpoint)
+
+  if (result.error) {
+    console.error('API调用错误:', result.error)
+    // 返回模拟数据作为降级
     return {
-      message: '模拟API响应',
+      message: '模拟API响应（实际调用失败）',
       user: user.name,
       endpoint,
+      error: result.error,
       timestamp: new Date().toISOString()
     }
   }
+
+  return result.data
 })
 
 // 辅助函数：安全地检查认证状态（不抛出错误）

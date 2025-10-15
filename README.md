@@ -22,9 +22,9 @@ bun dev
 项目里提供了以下认证方式的实现：
 - 混合cookies方式
 测试页面app/testclient和app/testserver
-- HttpOnly Cookies方式 （现在使用方式）
+- HttpOnly Cookies方式 
 测试页面app/testclient1和app/testserver1
 - 使用JWT + localstorage方式
 测试页面app/testclient2和app/testserver2
-- 使用Next Auth V5认证框架方式 （由于Next Auth版本和Next.js版本不兼容，暂不能使用）
+- 使用Next Auth V5认证框架方式 （现在使用方式）
 测试页面app/testclient3和app/testserver3

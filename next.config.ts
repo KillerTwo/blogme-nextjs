@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
     async rewrites() {
         return [
             {
-                source: '/api/:path*',
+                source: '/rest/:path*',
                 destination: `${BASE_URL}/:path*`, // 代理到后端服务器
             },
             {
