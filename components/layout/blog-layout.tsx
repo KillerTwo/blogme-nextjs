@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Home, FolderOpen, Tag, Archive, User, MessageSquare, ExternalLink, Search, Menu, X } from 'lucide-react';
+import { Home, FolderOpen, Tag, Archive, User, MessageSquare, ExternalLink, Search, Menu, X, MoreHorizontal } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -78,7 +78,8 @@ export function BlogLayout({ children }: LayoutProps) {
               {/* Desktop Navigation */}
               <NavigationMenu className="hidden md:flex h-full">
                 <NavigationMenuList className="h-full">
-                  {navigationItems.map((item) => (
+                  {/* 始终显示的前3个导航项 */}
+                  {navigationItems.slice(0, 3).map((item) => (
                     <NavigationMenuItem key={item.href} className="h-full flex items-center">
                       <NavigationMenuLink asChild>
                         <Link
@@ -93,6 +94,90 @@ export function BlogLayout({ children }: LayoutProps) {
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
+
+                  {/* 在大屏幕(lg)上显示第4-5个导航项 */}
+                  <div className="hidden lg:contents">
+                    {navigationItems.slice(3, 5).map((item) => (
+                      <NavigationMenuItem key={item.href} className="h-full flex items-center">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={item.href}
+                            className={`group inline-flex items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                              pathname === item.href ? 'bg-accent text-accent-foreground' : ''
+                            }`}
+                          >
+                            <item.icon className="mr-2 h-4 w-4" />
+                            {item.label}
+                          </Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    ))}
+                  </div>
+
+                  {/* 在超大屏幕(xl)上显示第6-7个导航项 */}
+                  <div className="hidden xl:contents">
+                    {navigationItems.slice(5, 7).map((item) => (
+                      <NavigationMenuItem key={item.href} className="h-full flex items-center">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={item.href}
+                            className={`group inline-flex items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                              pathname === item.href ? 'bg-accent text-accent-foreground' : ''
+                            }`}
+                          >
+                            <item.icon className="mr-2 h-4 w-4" />
+                            {item.label}
+                          </Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    ))}
+                  </div>
+
+                  {/* 省略号菜单 - 在小屏幕显示第4-7项，中屏显示第6-7项 */}
+                  <NavigationMenuItem className="h-full flex items-center xl:hidden">
+                    <DropdownMenu modal={false}>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-auto px-4 py-2">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        {/* 在 md-lg 屏幕显示第4-7项 */}
+                        <div className="lg:hidden">
+                          {navigationItems.slice(3, 7).map((item) => (
+                            <DropdownMenuItem key={item.href} asChild>
+                              <Link
+                                href={item.href}
+                                className={`flex items-center cursor-pointer ${
+                                  pathname === item.href ? 'bg-accent text-accent-foreground' : ''
+                                }`}
+                              >
+                                <item.icon className="mr-2 h-4 w-4" />
+                                {item.label}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </div>
+
+                        {/* 在 lg-xl 屏幕只显示第6-7项 */}
+                        <div className="hidden lg:block xl:hidden">
+                          {navigationItems.slice(5, 7).map((item) => (
+                            <DropdownMenuItem key={item.href} asChild>
+                              <Link
+                                href={item.href}
+                                className={`flex items-center cursor-pointer ${
+                                  pathname === item.href ? 'bg-accent text-accent-foreground' : ''
+                                }`}
+                              >
+                                <item.icon className="mr-2 h-4 w-4" />
+                                {item.label}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </div>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
             </div>

@@ -13,7 +13,7 @@ export function Sidebar() {
   const hotTags = tags.slice(0, 10);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2">
       {/* 博主介绍 */}
       <Card className="shadow-md border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
         <CardHeader className="pb-4">

@@ -61,7 +61,7 @@ export default function Home() {
             <div className="mb-4">
               <h2 className="text-xl font-semibold">最新文章</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
               {currentPosts.map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
