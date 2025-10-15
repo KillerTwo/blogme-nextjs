@@ -17,10 +17,10 @@ export function PostCard({ post }: PostCardProps) {
 
   return (
     <Card className="group overflow-hidden transition-all duration-200 hover:shadow-lg">
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row md:px-3 md:py-0">
         {/* 左侧内容区 */}
         <div className="flex-1 flex flex-col">
-          <CardHeader className="space-y-3 pb-3">
+          <CardHeader className="space-y-2 pb-2 pt-2">
             {/* 标签徽章 */}
             <div className="flex flex-wrap gap-2">
               <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 border-0">
@@ -37,15 +37,15 @@ export function PostCard({ post }: PostCardProps) {
 
             {/* 标题 */}
             <Link href={`/posts/${post.id}`}>
-              <h3 className="text-xl font-semibold line-clamp-2 hover:text-blue-600 transition-colors">
+              <h3 className="text-base font-semibold line-clamp-2 hover:text-blue-600 transition-colors" style={{ color: '#34495e' }}>
                 {post.title}
               </h3>
             </Link>
           </CardHeader>
 
-          <CardContent className="flex-1 pb-3">
+          <CardContent className="flex-1 pb-2 pt-0">
             {/* 分类和统计信息 */}
-            <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+            <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
               <Link href={`/categories/${post.category.slug}`} className="flex items-center hover:text-blue-600 transition-colors">
                 <span className="mr-1">📂</span>
                 <span>{post.category.name}</span>
@@ -70,7 +70,7 @@ export function PostCard({ post }: PostCardProps) {
             </p>
           </CardContent>
 
-          <CardFooter className="pt-0">
+          <CardFooter className="pt-0 pb-2">
             {/* 底部标签 */}
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
@@ -86,7 +86,7 @@ export function PostCard({ post }: PostCardProps) {
 
         {/* 右侧图片区 */}
         {post.coverImage && (
-          <div className="relative w-full md:w-80 h-48 md:h-auto overflow-hidden md:ml-6 flex-shrink-0">
+          <div className="relative w-full md:w-48 h-32 md:h-32 overflow-hidden md:ml-4 md:mr-2 flex-shrink-0 md:self-center">
             <Link href={`/posts/${post.id}`}>
               <Image
                 src={post.coverImage}

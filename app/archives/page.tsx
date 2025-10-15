@@ -45,7 +45,7 @@ export default function ArchivesPage() {
 
   return (
     <BlogLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-2">
         <div className="lg:col-span-5">
           <div className="bg-white rounded-lg shadow-sm p-8">
             <div className="flex items-center justify-between mb-8">
