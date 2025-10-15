@@ -11,7 +11,7 @@ import ContentLayout from "@/components/layout/content-layout";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6; // 每页显示6篇文章
+  const pageSize = 10; // 每页显示6篇文章
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
