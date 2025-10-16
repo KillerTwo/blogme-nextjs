@@ -51,9 +51,12 @@ export function TagClient({ tag }: TagClientProps) {
 
           {tagPosts.length > 0 ? (
             <>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-y-0 border-1 rounded-md py-2 bg-white divide-y divide-dashed">
                 {currentPosts.map((post) => (
-                  <PostCard key={post.id} post={post} />
+                  <div key={post.id}>
+                    <PostCard post={post} />
+                  </div>
+                  
                 ))}
               </div>
 

@@ -16,7 +16,7 @@ export function PostCard({ post }: PostCardProps) {
   const formattedDate = format(new Date(post.createdAt), 'yyyy-MM-dd HH:mm', { locale: zhCN });
 
   return (
-    <Card className="group overflow-hidden transition-all duration-200 hover:shadow-lg">
+    <Card className="group overflow-hidden transition-all duration-200 border-0 rounded-none shadow-none">
       <div className="flex flex-col md:flex-row md:px-3 md:py-0">
         {/* 左侧内容区 */}
         <div className="flex-1 flex flex-col">
@@ -37,7 +37,7 @@ export function PostCard({ post }: PostCardProps) {
 
             {/* 标题 */}
             <Link href={`/posts/${post.id}`}>
-              <h3 className="text-base font-semibold line-clamp-2 hover:text-blue-600 transition-colors" style={{ color: '#34495e' }}>
+              <h3 className="text-base font-semibold line-clamp-2 hover:text-blue-600 hover:text-lg transition-colors" style={{ color: '#34495e' }}>
                 {post.title}
               </h3>
             </Link>
